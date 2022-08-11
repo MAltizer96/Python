@@ -1,0 +1,3 @@
+Auto Clicker that allows you to click the left mouse button every 3 to 10 seconds and AutoMatically press the space bar every 5 to 10 minutes
+
+Users the Tkinter library for the UI buttons and Pythons threading to keep timers
