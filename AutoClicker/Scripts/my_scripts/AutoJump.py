@@ -9,6 +9,7 @@ class PushButtons(threading.Thread):
         self.keyboard = Controller() 
         self.jumping = False
         self.program_running = True
+        self.delay = 1
         
     def startJumping(self):
         self.jumping = True 
@@ -27,10 +28,9 @@ class PushButtons(threading.Thread):
         while self.program_running:
             #print("AutoJump program running")               
             while self.jumping:     
-                print("Jump")
-                delay = random.randint(300,600)                      
+                print("Jump")                                   
                 self.keyboard.press(Key.space) 
                 self.keyboard.release(Key.space) 
-                time.sleep(delay)
+                time.sleep(self.delay)
             time.sleep(0.1)
         

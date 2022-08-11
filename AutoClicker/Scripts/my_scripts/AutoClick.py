@@ -9,6 +9,7 @@ class PushMouseButton(threading.Thread):
             self.mouse = Controller() 
             self.clicking = False
             self.program_running = True
+            self.delay = 1
 
         def startClicking(self):
             self.clicking = True
@@ -25,11 +26,10 @@ class PushMouseButton(threading.Thread):
             while self.program_running:  
                 #print("autoClicking program running")            
                 while self.clicking:    
-                    print("click") 
-                    delay = random.randint(3,10)   
+                    print("click")                     
                     time.sleep(1)                   
                     self.mouse.press(Button.left)
                     time.sleep(.5)
                     self.mouse.release(Button.left) 
-                    time.sleep(delay)
+                    time.sleep(self.delay)
                 time.sleep(0.1)
