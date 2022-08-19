@@ -11,8 +11,7 @@ class App(tk.Tk):
         self.geometry("250x150")
 
         view = gui(self)               
-        view.grid(row=0, column=0, padx=10, pady=10)
-        
+        view.grid(row=0, column=0, padx=10, pady=10)        
   
         self.autoClicker = PushMouseButton()
         self.autoJump = PushButtons()
