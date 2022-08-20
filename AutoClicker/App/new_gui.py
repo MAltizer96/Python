@@ -1,9 +1,6 @@
-
-import tkinter as tk
 from tkinter import ttk
-from unicodedata import name
 
-class gui(tk.Frame):
+class gui(ttk.Frame):
     def __init__(self, parent):
         #tk.Tk.__init__(self)
         super().__init__(parent)
@@ -23,13 +20,13 @@ class gui(tk.Frame):
         self.initJumperWidgets()      
 
     def initClickerWidgets(self):  
-        self.clickOnLabel = ttk.Label(self,text="Off",name="clickStatusLabel")
+        self.clickOnLabel = ttk.Label(self,text="Off",name="clickLabel")
         self.clickOnLabel.grid(row=0,column=1)  
 
         self.clickButton = ttk.Button(self,text="AutoClick",command=lambda t="clickButton": self.changeButtonState(t,str(self.clickOnLabel)))    
         self.clickButton.grid(row=0,column=0)    
         
-        self.clickDelayEntry = tk.Entry(self,width=5)
+        self.clickDelayEntry = ttk.Entry(self,width=5)
         self.clickDelayEntry.grid(row=0,column=2)
 
         self.currentClickerDelay = ttk.Label(self,text="1",name="clickerDelayLabel")
@@ -69,15 +66,19 @@ class gui(tk.Frame):
 
     def changeSpeeds(self,button,value,label):
         # changes the delay speed on the button and updates the label to show new value
-        print("base value: {}",value)
+        #print("base value: {}",value)
         self.controller.changeDelaySpeed(button,value)
         self.changeLabelState(label,value)
 
 
     def changeLabelState(self,labelName,value):
-        print("labelName: {} value: {}",labelName,value)
+        #print("labelName: {} value: {}",labelName,value)
         # changes the on or off switch next to button
         self.nametowidget(labelName).config(text=value)
+    
+    def changeLabelStateOff(self):
+        self.nametowidget("jumpLabel").config(text="Off")
+        self.nametowidget("clickLabel").config(text="Off")
         
     
     
