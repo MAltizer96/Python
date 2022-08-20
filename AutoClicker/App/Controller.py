@@ -45,7 +45,7 @@ class Controller:
         #print(value)
         if value == "clickButton":
             return self.t_click
-        if value == "jumpButotn":
+        if value == "jumpButton":
             return self.t_jump
         return None
 
