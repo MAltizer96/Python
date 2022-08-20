@@ -2,6 +2,7 @@ import pyautogui
 import threading
 import time as time
 pyautogui.FAILSAFE = True
+
 class PushMouseButton(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)            
@@ -9,8 +10,7 @@ class PushMouseButton(threading.Thread):
         self.program_running = True
         self.delay = 1.0
 
-    def isClicking(self):
-        print("isClicking returned: {}",self.clicking)
+    def isClicking(self):        
         return self.clicking
 
 
@@ -18,18 +18,15 @@ class PushMouseButton(threading.Thread):
         try:
             self.delay = float(value)               
             return True
-        except ValueError:
-            print("cant use that number")
+        except ValueError:            
             return False  
 
     def startClicking(self):
         time.sleep(3)
-        self.clicking = True            
-        print("Started Clicking")         
+        self.clicking = True               
 
     def stopClicking(self):
-        self.clicking = False
-        print("Stopped Clicking")
+        self.clicking = False        
 
     def stop(self):
         self.program_running = False
@@ -37,8 +34,7 @@ class PushMouseButton(threading.Thread):
     def run(self): 
         while self.program_running:  
            # print("autoClicking program running")            
-            while self.clicking:    
-                print("click")                                     
+            while self.clicking:                                                    
                 pyautogui.click()                    
                 time.sleep(self.delay)
             time.sleep(0.1)
