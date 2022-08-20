@@ -1,9 +1,10 @@
-from sqlite3 import Row
 import tkinter as tk
 from new_gui import gui
 from Controller import Controller
 from AutoClick import PushMouseButton
 from AutoJump import PushButtons
+from HotKeys import HotKeys
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -15,18 +16,22 @@ class App(tk.Tk):
   
         self.autoClicker = PushMouseButton()
         self.autoJump = PushButtons()
-
+        self.hotkey = HotKeys()
+        
         self.autoJump.start()
         self.autoClicker.start()
+        self.hotkey.start()
 
-        model = [self.autoClicker,self.autoJump]
+        model = [self.autoClicker,self.autoJump,self.hotkey]
         controller = Controller(view,model)
         view.setController(controller)
+        self.hotkey.setController(controller)
     
     def stopProgram(self):
         self.autoClicker.stop()
-        self.autoJump.stop()
-        
+        self.autoJump.stop()     
+        self.hotkey.stop()  
+
 
 
 if __name__ == '__main__':
