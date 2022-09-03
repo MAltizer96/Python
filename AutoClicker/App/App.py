@@ -4,7 +4,7 @@ from Controller import Controller
 from AutoClick import PushMouseButton
 from AutoJump import PushButtons
 from HotKeys import HotKeys
-
+from ScanGui import ScanGui
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -17,12 +17,14 @@ class App(tk.Tk):
         self.autoClicker = PushMouseButton()
         self.autoJump = PushButtons()
         self.hotkey = HotKeys()
-        
+        self.scanGUI = ScanGui()
+
         self.autoJump.start()
         self.autoClicker.start()
         self.hotkey.start()
+        self.scanGUI.start()
 
-        model = [self.autoClicker,self.autoJump,self.hotkey]
+        model = [self.autoClicker,self.autoJump,self.hotkey,self.scanGUI]
         controller = Controller(view,model)
         view.setController(controller)
         self.hotkey.setController(controller)
@@ -30,7 +32,8 @@ class App(tk.Tk):
     def stopProgram(self):
         self.autoClicker.stop()
         self.autoJump.stop()     
-        self.hotkey.stop()  
+        self.hotkey.stop() 
+        self.scanGUI.stop() 
 
 
 
