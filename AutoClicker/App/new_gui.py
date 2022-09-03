@@ -17,7 +17,8 @@ class gui(ttk.Frame):
         #self.createClickButton = tk.Button(self, text="Create Auto Click For Key", command=lambda : self.startAutoJump())
         # base ui
         self.initClickerWidgets()  
-        self.initJumperWidgets()      
+        self.initJumperWidgets()
+        self.initScanWidgets()      
 
     def initClickerWidgets(self):  
         self.clickOnLabel = ttk.Label(self,text="Off",name="clickLabel")
@@ -53,6 +54,30 @@ class gui(ttk.Frame):
         self.delayJumpEntryConfirmButton = ttk.Button(self,text="Confirm",command=lambda t="jumpButton": self.changeSpeeds(t,self.jumpDelayEntry.get(),str(self.currentJumpDelay)))
         self.delayJumpEntryConfirmButton.grid(row=1,column=3)
     
+    def initScanWidgets(self):
+        self.scanOnLable = ttk.Label(self,text="Off",name="scanLabel")
+        self.scanOnLable.grid(row=2,column=1)
+
+        self.scanButton = ttk.Button(self,text="ScanClick",command=lambda t="scanButton": self.changeButtonState(t,str(self.scanOnLable)))
+        self.scanButton.grid(row=2,column=0)
+
+        self.numberOfRowsEntry = ttk.Entry(self,width=5)
+        self.numberOfRowsEntry.grid(row=2,column=2)
+        self.currentNumberOfRowsLabel = ttk.Label(self,text="4",name="numberOfRowsLabel")
+        self.currentNumberOfRowsLabel.grid(row=2,column=4)
+        # self.heightOffSetEntry = ttk.Entry(self,width=5)
+        # self.heightOffSetEntry.grid(row=2,column=2)
+        # self.heightOffsetLabel = ttk.Label(self,text="Height Offset")
+        # self.heightOffsetLabel.grid(row=3,column=2)
+
+        # self.maxOffSetEntry = ttk.Entry(self,widget=5)
+        # self.maxOffSetEntry.grid(row=2,column=3)
+        # self.maxOffSetLabel = ttk.Label(self,text="max offset")
+        # self.maxOffSetLabel.grid(row=3,column=3)
+        
+        self.numberOfRowsConfirmButton = ttk.Button(self,text="Confirm",command=lambda t="scanButton": self.changeNumberOfRows(t,self.numberOfRowsEntry.get(),str(self.currentNumberOfRowsLabel)))
+        self.numberOfRowsConfirmButton.grid(row=2,column=3)
+
     def changeButtonState(self,button,label):
         # Verify the controller is set
         if self.controller != None:
@@ -70,6 +95,9 @@ class gui(ttk.Frame):
         self.controller.changeDelaySpeed(button,value)
         self.changeLabelState(label,value)
 
+    def changeNumberOfRows(self,button,rows,label):
+        self.controller.changeScanRows(button,rows)
+        self.changeLabelState(label,rows)
 
     def changeLabelState(self,labelName,value):
         #print("labelName: {} value: {}",labelName,value)
@@ -79,6 +107,7 @@ class gui(ttk.Frame):
     def changeLabelStateOff(self):
         self.nametowidget("jumpLabel").config(text="Off")
         self.nametowidget("clickLabel").config(text="Off")
+        self.nametowidget("scanLabel").config(text="Off")
         
     
     
