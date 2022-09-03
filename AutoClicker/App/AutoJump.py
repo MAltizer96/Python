@@ -1,7 +1,7 @@
-import pyautogui
+import pydirectinput
 import threading
 import time as time
-pyautogui.FAILSAFE = True
+pydirectinput.FAILSAFE = True
 
 class PushButtons(threading.Thread):
     def __init__(self):
@@ -38,10 +38,9 @@ class PushButtons(threading.Thread):
         
     def run(self):        
         while self.program_running:
-            #print("AutoJump program running")               
-            while self.jumping:     
-                #print("Jump")                                   
-                pyautogui.press('space')                
+            #print("AutoJump program running")                 
+            while self.jumping:                                                 
+                pydirectinput.press('space')                
                 time.sleep(self.delay)
             time.sleep(0.1)
         
