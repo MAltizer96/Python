@@ -5,7 +5,7 @@ class Controller:
         self.t_click = model[0]
         self.t_jump = model[1]
         self.t_hotKeys = model[2]
-        
+        self.t_scan = model[3]
 
     def checkClickerState(self):
         if self.t_click.isClicking():
@@ -28,6 +28,14 @@ class Controller:
                 self.t_jump.startJumping()
             else:
                 self.t_jump.stopJumping()
+
+    def changeScanState(self):
+        if self.t_scan.is_alive():
+            if not self.t_scan.isScanning():
+                self.t_scan.startScanning()
+            else:
+                self.t_scan.stopScanning()
+
                 
     def changeThreadState(self, button):
         #print("button:{}",button)
@@ -35,11 +43,18 @@ class Controller:
             self.changeClickerState()
 
         if button == "jumpButton":
-            self.changeJumpState()            
+            self.changeJumpState()   
+
+        if button == "scanButton":
+            self.changeScanState()         
 
     def changeDelaySpeed(self,button,value):
         thread = self.getThread(button)        
         thread.setDelay(value)
+
+    def changeScanRows(self,button,rows):
+        thread = self.getThread(button)
+        thread.setNumberOfRows(rows)
 
     def getThread(self,value):
         #print(value)
@@ -47,9 +62,15 @@ class Controller:
             return self.t_click
         if value == "jumpButton":
             return self.t_jump
+        if value == "scanButton":
+            return self.t_scan
         return None
 
     def changeStateOff(self):
         self.t_click.stopClicking()
         self.t_jump.stopJumping()
+        self.t_scan.stopScanning()
         self.view.changeLabelStateOff()
+
+    
+        
