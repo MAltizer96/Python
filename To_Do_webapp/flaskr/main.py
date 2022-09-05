@@ -5,7 +5,7 @@ from flask import Flask,session,redirect,request,render_template
 from flask_session import Session
 from flask_mysqldb import MySQL
 
-from helpers import login_required
+from helpers import login_required,error
 
 
 # create and configure the app
@@ -25,28 +25,40 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config["MYSQL_PASSWORD"] = 'Password'
 app.config['MYSQL_DB'] = 'to_do_webapp'
-
 mysql = MySQL(app)
-print("mysql object", mysql.connection)
-# create a cursor
-
-
-#cursor.execute(''' IF NOT EXISTS (SELECT * FROM sys.tables WHERE NAME = 'ToDo) ''')
-
-
-
 try:
     os.makedirs(app.instance_path)
 except OSError:
     pass
 
-# a simple page that says hello
+
 @app.route('/')
 def home_page():    
-    return render_template("layout.html")
+    
+    return render_template("index.html")
+    
 
-@app.route('/register')
+@app.route('/register', methods=["GET","POST"])
 def register():
+    if request.method == "GET":
+        print("ran")
+        return render_template("register.html")
+    # post
+    username = request.form.get("username")
+    password = request.form.get("password")
+    confirmPassword = request.form.get("confirm_password")
+    # confirm passwords match
+    if password != confirmPassword:        
+        return error("Passwords Dont Match")
+    # create cursor object
+    curser = mysql.connection.cursor()
+     # check database for username  
+    checkForUser = curser.execute(""" SELECT username FROM users WHERE username = ?""", username )
+    if checkForUser != None:
+        return error("Username Already Taken")
+    
+
+    curser.execute(""" INSERT INTO users (username, hashword) VALUE( ?, ?) """, )
     return 'not yet done'
 
 
