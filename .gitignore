@@ -1,1 +1,16 @@
-/hello_flask
+venv/
+
+*.pyc
+__pycache__/
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+flask_session/
+
+dist/
+build/
+*.egg-info/
