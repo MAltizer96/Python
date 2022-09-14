@@ -3,6 +3,7 @@ import pydirectinput
 from win32api import GetSystemMetrics
 import time as time
 
+pydirectinput.PAUSE = 0.05
 class ScanGui(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)               
@@ -40,15 +41,18 @@ class ScanGui(threading.Thread):
         newHeight = self.screenHeight *.5 + self.heightOffSet         
         nextLoopoffset = 0 
         numberOfLoops = 0      
+        
         while nextLoopoffset < self.maxOffSet:       
             for x in range(150,self.screenWidth-250,10):
                 if self.scanRunning == False:
                     break
                 print(numberOfLoops)
                 pydirectinput.moveTo(x,int(newHeight+nextLoopoffset))
-                #print("x = {}, y = {} offset = {}".format(x,int(newHeight-nextLoopoffset),nextLoopoffset))                      
-                pydirectinput.click()   
-            #print("move")
+                print("x = {}, y = {} offset = {}".format(x,int(newHeight-nextLoopoffset),nextLoopoffset))                      
+                pydirectinput.click() 
+            if self.scanRunning == False:
+                break  
+            print("move")
             nextLoopoffset += 5
             numberOfLoops += 1        
             if numberOfLoops > self.totalNumberOfRows: 
