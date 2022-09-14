@@ -4,6 +4,26 @@
     Index
 {% endblock %}
 
-{% block main %}
-this is the main block do something with me
+{% block content %}
+    {% if g.user %}
+    <form action="{{ url_for('list.create') }}" method="POST">              
+        <input type="text" name="ToDo" id="ToDo" placeholder="Add To List...">
+        <input type="submit" value="Create">
+    </form>
+    {% endif %}
+    {% if to_do_list %}
+    <ol>
+        {% for toDo in to_do_list%}
+            
+              <li>
+                <form action="{{ url_for('list.delete', id=toDo['id'] ) }}" method="POST">
+                    <a>{{ toDo['todo'] }}</a>
+                    <input type="submit" value="Done">
+                </form>
+                
+              </li>
+            
+        {% endfor %}
+    </ol>
+    {% endif %}
 {% endblock %}
