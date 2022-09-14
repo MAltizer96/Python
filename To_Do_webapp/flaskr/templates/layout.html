@@ -13,15 +13,21 @@
     </button>
     <!-- creates the holder for all the links-->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">                        
-        
+        <!-- creates a navbar at the top of screen-->
         <ul class="navbar-nav me-auto">
+            <!-- checks if the users has a current session (logged in)-->
             {% if g.user %}
-                 <li class="nav-item"><span>{{ g.user['username'] }}</span>               
+                <!--displays a welcome with username-->
+                <li class="nav-item"><span>Welcome! {{ g.user['username'] }}</span>      
+                <!--logout link-->         
+                <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('auth.logout') }}">Logout</a></li>                    
             {% else %}
             <li class="nav-item">
+                <!--login link-->
                 <a class="nav-link text-dark " href="{{ url_for('auth.login') }}">Login</a>
             </li>
             <li class="nav-item">
+                <!--register link-->
                 <a class="nav-link text-dark " href="{{ url_for('auth.register') }}">Register</a>
             </li>
             {% endif %}   
