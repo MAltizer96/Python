@@ -35,7 +35,7 @@ def register():
         if error is None:
             try:
                 # adds users to database
-                db.execute("INSERT INTO users (username, password) VALUES (?,?)",(username,generate_password_hash(password)))
+                db.execute('INSERT INTO users (username, password) VALUES (?,?)',(username,generate_password_hash(password)))
                 db.commit()               
             except db.IntegrityError:
                 # name taken
@@ -61,12 +61,13 @@ def login():
         
         if error is None:       
             # get the user from the database     
-            user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+            user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()           
             # check if user exists and password is correct            
             if user is None or not check_password_hash(user['password'],password):
                 error = 'Incorrect Username or Password'
 
             if error is None:
+                
                 session.clear()
                 session['user_id'] = user['id']
                 return redirect(url_for('index'))
@@ -74,7 +75,7 @@ def login():
         flash(error)
     return render_template('auth/login.html')
             
-bp.route('/logout')
+@bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
@@ -86,8 +87,8 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        # gets users form database and stores it
-        g.user = get_db().execute('SELECT * FROM users WHERE id = ?', user_id).fetchone        
+        # gets users form database and stores it        
+        g.user = get_db().execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()        
 
 def login_required(view):  
     # wraps around the view that was passed in  
