@@ -3,7 +3,7 @@ import os
 from flask import Flask,session,redirect,request,render_template
 from flask_session import Session
 
-from . import helpers, db, auth
+from . import helpers, db, auth,lists
 
 def create_app(test_config=None):        
     # create and configure the app
@@ -36,17 +36,15 @@ def create_app(test_config=None):
 
     #register blueprints
     app.register_blueprint(auth.bp)
-    
-    #makes sure the path instance path exists
+    app.register_blueprint(lists.bp)
+    app.add_url_rule('/',endpoint='index') 
+
+ 
+    # makes sure the path instance path exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    @app.route('/')
-    def home_page():    
-        
-        return render_template("index.html")   
 
         
     return app
