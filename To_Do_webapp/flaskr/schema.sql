@@ -1,9 +1,17 @@
 DROP TABLE IF EXISTS users;
-
+DROP TABLE IF EXISTS lists;
 
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 
+);
+
+CREATE TABLE lists (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,    
+    todo TEXT NOT NULL,
+    completed INTEGER NOT NULL DEFAULT 0,
+    time_stamp TEXT NOT NULL
 );
