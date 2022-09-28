@@ -1,23 +1,21 @@
 import tkinter as tk
-from new_gui import gui
-from Controller import Controller
-from AutoClick import PushMouseButton
-from AutoJump import PushButtons
-from HotKeys import HotKeys
-from ScanGui import ScanGui
+from view import new_gui
+from controller import Controller
+from model import AutoJump,AutoClick,HotKeys,ScanGui
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("AutoClickerApp")               
         self.geometry("250x150")
 
-        view = gui(self)               
+        view = new_gui.gui(self)               
         view.grid(row=0, column=0, padx=10, pady=10)        
   
-        self.autoClicker = PushMouseButton()
-        self.autoJump = PushButtons()
-        self.hotkey = HotKeys()
-        self.scanGUI = ScanGui()
+        self.autoClicker = AutoClick.PushMouseButton()
+        self.autoJump = AutoJump.PushButtons()
+        self.hotkey = HotKeys.HotKeys()
+        self.scanGUI = ScanGui.ScanGui()
 
         self.autoJump.start()
         self.autoClicker.start()
@@ -25,7 +23,7 @@ class App(tk.Tk):
         self.scanGUI.start()
 
         model = [self.autoClicker,self.autoJump,self.hotkey,self.scanGUI]
-        controller = Controller(view,model)
+        controller = Controller.Controller(view,model)
         view.setController(controller)
         self.hotkey.setController(controller)
     
