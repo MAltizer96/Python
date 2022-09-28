@@ -14,7 +14,7 @@ class Controller:
     
     def changeClickerState(self):        
         if self.t_click.is_alive():
-            #print("current clicking state:{}",self.t_click.isClicking())
+            
             if not self.t_click.isClicking():
                 self.t_click.startClicking()
             else:
