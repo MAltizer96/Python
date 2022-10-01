@@ -1,53 +1,41 @@
-from tkinter import ttk, IntVar
+from tkinter import IntVar
+import tkinter as tk
+#from view.widgets.custom_widgets import initJumperWidgets, initScanWidgets
+from view.widgets.AutoWidgets import AutoWidgets
 
-from view.widgets import custom_widgets
-
-class gui(ttk.Frame):
-    def __init__(self, parent):
+class gui(tk.Frame):
+    def __init__(self, parent, controller=None):
         #tk.Tk.__init__(self)
         super().__init__(parent)
+        self.auto_clicker_widgets = AutoWidgets(parent,0,0,'click')
+        self.auto_jump_widgets = AutoWidgets(parent,1,0,'jump')
+        self.auto_scan_widgets = AutoWidgets(parent,2,0,'scan')
         self.controller = None               
         self.initUI()
 
-    def setController(self,controller):
+    def set_controller(self,controller):
         self.controller = controller
+        self.auto_clicker_widgets.set_controller(self.controller) 
+        self.auto_jump_widgets.set_controller(self.controller)
+        self.auto_scan_widgets.set_controller(self.controller)      
+    
+    def get_controller(self):
+        return self.controller
 
     def initUI(self): 
         self.initWidgets()
 
-    def initWidgets(self):
-        #self.createClickButton = tk.Button(self, text="Create Auto Click For Key", command=lambda : self.startAutoJump())
-        # base ui
-        custom_widgets.initClickerWidgets(self)  
-        custom_widgets.initJumperWidgets(self)
-        custom_widgets.initScanWidgets(self)  
-    
-
-    def changeButtonState(self,button,label):
-        # Verify the controller is set
-        if self.controller != None:
-            # change state of thread
-            self.controller.changeThreadState(button)
-            if self.nametowidget(label).cget("text") == "Off":
-                value = "On"
-            else:
-                value = "Off"
-            self.changeLabelState(label,value)
-
-    def changeSpeeds(self,button,value,label):
-        # changes the delay speed on the button and updates the label to show new value
-        #print("base value: {}",value)
-        self.controller.changeDelaySpeed(button,value)
-        self.changeLabelState(label,value)
+    def initWidgets(self):        
+        # creates widgets      
+        self.auto_clicker_widgets.init_widgets()
+        self.auto_jump_widgets.init_widgets()
+        self.auto_scan_widgets.init_widgets()
 
     def changeNumberOfRows(self,button,rows,label):
         self.controller.changeScanRows(button,rows)
         self.changeLabelState(label,rows)
 
-    def changeLabelState(self,labelName,value):
-        #print("labelName: {} value: {}",labelName,value)
-        # changes the on or off switch next to button
-        self.nametowidget(labelName).config(text=value)
+
     
     def changeLabelStateOff(self):
         self.nametowidget("jumpLabel").config(text="Off")
