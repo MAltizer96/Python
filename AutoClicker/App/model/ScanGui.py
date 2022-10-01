@@ -30,7 +30,7 @@ class ScanGui(threading.Thread):
         self.move = value
         print("move changed to ", self.move)
 
-    def setNumberOfRows(self,value):
+    def changeValue(self,value):
         try:
             self.totalNumberOfRows = float(value)               
             return True

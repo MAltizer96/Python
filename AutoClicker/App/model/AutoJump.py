@@ -14,7 +14,7 @@ class PushButtons(threading.Thread):
     def isJumping(self):
         return self.jumping
 
-    def setDelay(self,value):
+    def changeValue(self,value):
         try:
             self.delay = float(value)               
             return True

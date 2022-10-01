@@ -14,7 +14,7 @@ class PushMouseButton(threading.Thread):
         return self.clicking
 
 
-    def setDelay(self,value):
+    def changeValue(self,value):
         try:
             self.delay = float(value)               
             return True
