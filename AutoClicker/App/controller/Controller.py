@@ -37,8 +37,7 @@ class Controller:
                 self.t_scan.stopScanning()
 
                 
-    def changeThreadState(self, button):
-        #print("button:{}",button)
+    def changeThreadState(self, button):        
         if button == "clickButton":
             self.changeClickerState()
 
@@ -48,13 +47,10 @@ class Controller:
         if button == "scanButton":
             self.changeScanState()         
 
-    def changeDelaySpeed(self,button,value):
-        thread = self.getThread(button)        
-        thread.setDelay(value)
-
-    def changeScanRows(self,button,rows):
+    def changeValues(self,button,value):
         thread = self.getThread(button)
-        thread.setNumberOfRows(rows)
+        thread.changeValue(value)
+
 
     def getThread(self,value):
         #print(value)
